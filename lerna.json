@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "reactive-store",
+    "reactive-store-*"
+  ],
+  "version": "0.0.0"
+}
