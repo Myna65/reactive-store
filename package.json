@@ -2,7 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "lint": "lerna run lint"
+
   },
   "workspaces": [
     "reactive-store"

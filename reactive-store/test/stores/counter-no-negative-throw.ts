@@ -1,5 +1,4 @@
-import { configureStore, Reducer, ReducerError, Store } from '../../src';
-import { Left, Right } from 'purify-ts';
+import { configureStore, createReducer, ErrorReporter, Reducer, Store } from '../../src';
 
 interface IncrementAction {
   type: 'INCREMENT'
@@ -11,23 +10,24 @@ interface DecrementAction {
 
 type Action = IncrementAction | DecrementAction;
 
-const rootReducer: Reducer<number, Action> = (state = 0, action) => {
+const rootReducer: Reducer<number, Action> = createReducer((state = 0, action) => {
   switch (action.type) {
     case 'INCREMENT':
-      return Right(state + 1);
+      return state + 1;
     case 'DECREMENT':
       const newState = state - 1;
       if(newState < 0) {
-        return Left(new ReducerError('counter should not be lower than 0'));
+        throw new Error('Counter should not be lower than 0');
       }
-      return Right(newState);
+      return newState;
     default:
-      return Right(state);
+      return state;
   }
-};
+});
 
 type IncrementStore = Store<number, Action>;
 
-export const configureNonNegativeCounterStore: () => IncrementStore = () => configureStore({
+export const configureNonNegativeThrowCounterStore = (errorReporter: ErrorReporter): IncrementStore => configureStore({
   rootReducer,
+  errorReporter,
 });

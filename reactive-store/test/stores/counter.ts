@@ -1,6 +1,4 @@
-import { configureStore, Reducer, Store } from '../../src';
-import { createReducer } from '../../src/reducer';
-
+import { configureStore, Reducer, Store, createReducer, ErrorReporter } from '../../src';
 
 interface IncrementAction {
   type: 'INCREMENT'
@@ -23,8 +21,9 @@ const rootReducer: Reducer<number, Action> = createReducer((state = 0, action) =
   }
 });
 
-export type IncrementStore = Store<number, Action>;
+type IncrementStore = Store<number, Action>;
 
-export const configureIncrementStore: () => IncrementStore = () => configureStore({
+export const configureCounterStore = (errorReporter: ErrorReporter): IncrementStore => configureStore({
   rootReducer,
+  errorReporter,
 });
