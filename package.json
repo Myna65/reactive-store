@@ -7,7 +7,8 @@
 
   },
   "workspaces": [
-    "reactive-store"
+    "reactive-store",
+    "reactive-store-react"
   ],
   "devDependencies": {
     "lerna": "^4.0.0"

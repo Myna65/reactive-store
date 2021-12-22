@@ -5,6 +5,8 @@ import { InMemoryErrorReporter } from './error-reporter';
 import { ReducerError, Store } from '../src';
 import { configureNonNegativeThrowCounterStore } from './stores/counter-no-negative-throw';
 import { configureFailAtInitStore, configureFailAtInitStoreChecked } from './stores/fail-at-init';
+import { constantSelector } from './stores/selectors/constant-selector';
+import { expectSelectorToBeSubscribed } from './assertions';
 
 describe('Reactive store', () => {
   let errorReporter: InMemoryErrorReporter;
@@ -90,6 +92,15 @@ describe('Reactive store', () => {
             configureFailAtInitStore(errorReporter);
           }).toThrow();
         });
+      });
+    });
+  });
+
+  describe('Selectors', () => {
+    test('A constant selector', () => {
+      const store = configureNoopStore(errorReporter);
+      expectSelectorToBeSubscribed(store, constantSelector, (value) => {
+        expect(value).toEqual(2);
       });
     });
   });
